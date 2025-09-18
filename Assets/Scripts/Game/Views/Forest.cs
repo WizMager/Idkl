@@ -1,0 +1,9 @@
+﻿using Game.Views.Abstractions;
+
+namespace Game.Views
+{
+    public class Forest : AInteractObject
+    {
+        
+    }
+}
