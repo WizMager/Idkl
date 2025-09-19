@@ -197,6 +197,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactObjectType: 2
+  _interactCollider: {fileID: 133624282}
+--- !u!65 &133624282 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 3212320124243657411, guid: 2f5317ed7293b714f993011b892b0418, type: 3}
+  m_PrefabInstance: {fileID: 133624279}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &373334091 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4057864246234802249, guid: 2f5317ed7293b714f993011b892b0418, type: 3}
@@ -215,6 +221,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactObjectType: 1
+  _interactCollider: {fileID: 373334097}
+--- !u!65 &373334097 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 3212320124243657411, guid: 2f5317ed7293b714f993011b892b0418, type: 3}
+  m_PrefabInstance: {fileID: 6327930365620161117}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &457416565
 GameObject:
   m_ObjectHideFlags: 0

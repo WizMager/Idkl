@@ -14,7 +14,6 @@ namespace Game.Services.UiManager.Impl
         {
             foreach (var window in windows)
             {
-                Debug.Log(window.GetType());
                 window.AddControllers();
                 window.Activation(false);
                 _windows.TryAdd(window.WindowName, window);

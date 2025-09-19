@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Game.Controllers
 {
     [Install(EExecutionPriority.Normal, 250)]
-    public class PlayerMovementController : IUpdatable
+    public class PlayerMovementController : IFixedUpdatable
     {
         private readonly IInputService _inputService;
         private readonly PlayerView _playerView;
@@ -26,12 +26,12 @@ namespace Game.Controllers
             _playerView = gameSceneObjectsProvider.GameSceneObjects.PlayerView;
         }
 
-        public void Update()
+        public void FixedUpdate()
         {
             if (!_inputService.IsMove)
                 return;
             
-            _playerView.transform.position += _playerView.transform.forward * Time.deltaTime * _playerData.MoveSpeed;
+            _playerView.Rigidbody.linearVelocity = _playerView.transform.forward * _playerData.MoveSpeed;
         }
     }
 }

@@ -6,9 +6,11 @@ namespace Utils.LayersUtil
     {
 		private static readonly Mask DefaultMask = new Mask(Layers.Default, Layers.InteractObject);
 		private static readonly Mask MouseMask = new Mask(Layers.InteractObject, Layers.Ground);
+		private static readonly Mask PlayerMask = new Mask(Layers.Player);
 		
 		public static int Default => DefaultMask.Value;
 		public static int Mouse => MouseMask.Value;
+		public static int Player => PlayerMask.Value;
 
 		private class Mask
 		{

@@ -7,14 +7,17 @@ namespace Utils.LayersUtil
         public const string Default = "Default";
         public const string InteractObject = "InteractObject";
         public const string Ground = "Ground";
+        public const string Player = "Player";
         
         private static readonly Layer _defaultLayer = new Layer(Default);
         private static readonly Layer _interactObjectLayer = new Layer(InteractObject);
         private static readonly Layer _groundLayer = new Layer(Ground);
+        private static readonly Layer _playerLayer = new Layer(Player);
         
         public static int DefaultLayer => _defaultLayer.Id;
         public static int InteractObjectLayer => _interactObjectLayer.Id;
         public static int GroundLayer => _groundLayer.Id;
+        public static int PlayerLayer => _playerLayer.Id;
 
         private class Layer
         {
