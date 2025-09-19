@@ -1,7 +1,11 @@
 ﻿using Game.Services.InteractObjectService;
+using Game.Services.UiManager;
+using Game.Ui.InteractObjectStatusWindow;
 using Game.Views.Interfaces;
 using R3;
 using R3.Triggers;
+using Reflex.Attributes;
+using UiCore;
 using UnityEngine;
 using Utils.LayersUtil;
 
@@ -9,14 +13,14 @@ namespace Game.Views.Abstractions
 {
     public abstract class AInteractObject : MonoBehaviour, IInteractObject
     {
-        public Observable<InteractObjectData> OnMouseOver  => _onMouseOverCommand;
         public Observable<InteractObjectData> OnPlayerEntered  => _onPlayerEnteredCommand;
         
         [SerializeField] private EInteractObject _interactObjectType;
         [SerializeField] private Collider _interactCollider;
         
-        private readonly ReactiveCommand<InteractObjectData> _onMouseOverCommand = new ();
         private readonly ReactiveCommand<InteractObjectData> _onPlayerEnteredCommand = new ();
+
+        [Inject] private IUiManager _uiManager;
 
         private void Start()
         {
@@ -27,13 +31,8 @@ namespace Game.Views.Abstractions
         {
             if (other.IsOnLayer(Layers.PlayerLayer))
                 return;
-            
-            Debug.Log("check");
-        }
-        
-        public void MouseOver()
-        {
-            _onMouseOverCommand.Execute(new InteractObjectData(_interactObjectType));
+            _uiManager.OpenWindow(EWindowName.InteractObjectStatus);
+            _onPlayerEnteredCommand.Execute(new InteractObjectData(_interactObjectType));
         }
     }
 }

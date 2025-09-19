@@ -1,5 +1,4 @@
 ﻿using Game.Services.GameSceneObjectsProvider;
-using Game.Services.InteractObjectService;
 using GameLoop.Interfaces;
 using Generator;
 using UnityEngine;
@@ -12,9 +11,7 @@ namespace Game.Controllers
         private readonly Transform _playerTransform;
         private readonly Transform _cameraTransform;
         
-        public PlayerCameraController(
-            IGameSceneObjectsProvider gameSceneObjectsProvider,
-            IInteractObjectService interactObjectService)//temporary
+        public PlayerCameraController(IGameSceneObjectsProvider gameSceneObjectsProvider)
         {
             _cameraTransform = gameSceneObjectsProvider.GameSceneObjects.Camera.transform;
             _playerTransform = gameSceneObjectsProvider.GameSceneObjects.PlayerView.transform;

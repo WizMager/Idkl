@@ -18,15 +18,12 @@ namespace Game.Installers
         public void InstallBindings(ContainerBuilder containerBuilder)
         {
             containerBuilder.AddSingleton(typeof(InputService), typeof(IInputService));
-            containerBuilder.AddSingleton(new GameSceneObjectsProvider(_gameSceneObjects),
-                typeof(IGameSceneObjectsProvider));
-            containerBuilder.AddSingleton(typeof(UiManager), typeof(IUiManager));
-            var interactObjects = _gameSceneObjects.InteractObjects;
-            foreach (var interactObject in interactObjects)
+            containerBuilder.AddSingleton(new GameSceneObjectsProvider(_gameSceneObjects), typeof(IGameSceneObjectsProvider));
+            foreach (var interactObject in _gameSceneObjects.InteractObjects)
             {
-
                 containerBuilder.AddSingleton(interactObject, typeof(IInteractObject));
             }
+            containerBuilder.AddSingleton(typeof(UiManager), typeof(IUiManager));
             containerBuilder.AddSingleton(typeof(InteractObjectService), typeof(IInteractObjectService));
         }
     }

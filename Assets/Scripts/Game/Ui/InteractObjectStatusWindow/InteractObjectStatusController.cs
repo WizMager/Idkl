@@ -3,23 +3,15 @@ using UiCore;
 
 namespace Game.Ui.InteractObjectStatusWindow
 {
-    public class InteractObjectStatusController : AWindowController<InteractObjectStatusView>
+    public class InteractObjectStatusController : AWindowController<InteractObjectStatusView>, IInteractObjectController
     {
-        private readonly IInteractObjectService _interactObjectService;
-        
-        public InteractObjectStatusController(
-            InteractObjectStatusView view//, 
-            //IInteractObjectService interactObjectService
-        ) : base(view)
+        public InteractObjectStatusController(InteractObjectStatusView view) : base(view)
         {
-            //_interactObjectService = interactObjectService;
         }
 
-        protected override void OnShow()
+        public void SetInteractObjectData(InteractObjectData interactObjectData)
         {
-            base.OnShow();
-            
-            //View.ObjectName.text = _interactObjectService.GetCurrentInteractObjectData().InteractObjectName.ToString();
+            View.ObjectName.text = interactObjectData.InteractObjectName.ToString();
         }
     }
 }
