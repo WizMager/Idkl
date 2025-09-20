@@ -1,38 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.Services.UiManager;
-using Game.Ui.InteractObjectStatusWindow;
 using Game.Views.Interfaces;
 using R3;
-using UnityEngine;
+using Ui.Realization.InteractObjectStatusWindow;
+using Ui.UiCore;
+using Ui.UiManager;
 
 namespace Game.Services.InteractObjectService.Impl
 {
     public class InteractObjectService : IInteractObjectService, IDisposable
     {
         private readonly List<IInteractObject> _interactObjects = new();
-
+        private readonly IUiManager _uiManager;
         private readonly CompositeDisposable _disposable = new ();
-        private InteractObjectData _currentInteractObjectData;
-        private readonly IInteractObjectController _interactObjectController;
         
-        public InteractObjectService(IEnumerable<IInteractObject> interactObjects, IInteractObjectController interactObjectController)
+        private InteractObjectData _currentInteractObjectData;
+        
+        
+        public InteractObjectService(
+            IEnumerable<IInteractObject> interactObjects, 
+            IUiManager uiManager//, 
+            //IActivityStatusController activityStatusController
+        )
         {
             foreach (var interactObject in interactObjects)
             {
                 //_interactObjects.Add(interactObject);
-                Debug.Log("init");
                 _disposable.Add(interactObject.OnPlayerEntered.Subscribe(OnPlayerEnteredInObject));
             }
 
-            _interactObjectController = interactObjectController;
+            _uiManager = uiManager;
+            //_activityStatusController = activityStatusController;
         }
 
         private void OnPlayerEnteredInObject(InteractObjectData interactObjectData)
         {
-            Debug.Log("InteractObjectService: OnPlayerEnteredInObject");
             _currentInteractObjectData = interactObjectData;
-            _interactObjectController.SetInteractObjectData(interactObjectData);
+            _uiManager.OpenPopupWindow(EWindowName.InteractObjectStatus);
         }
         
         public InteractObjectData GetCurrentInteractObjectData()

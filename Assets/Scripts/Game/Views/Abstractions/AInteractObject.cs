@@ -1,11 +1,10 @@
 ﻿using Game.Services.InteractObjectService;
-using Game.Services.UiManager;
-using Game.Ui.InteractObjectStatusWindow;
 using Game.Views.Interfaces;
 using R3;
 using R3.Triggers;
 using Reflex.Attributes;
-using UiCore;
+using Ui.UiCore;
+using Ui.UiManager;
 using UnityEngine;
 using Utils.LayersUtil;
 
@@ -31,7 +30,8 @@ namespace Game.Views.Abstractions
         {
             if (other.IsOnLayer(Layers.PlayerLayer))
                 return;
-            _uiManager.OpenWindow(EWindowName.InteractObjectStatus);
+            
+            _uiManager.OpenPopupWindow(EWindowName.InteractObjectStatus);
             _onPlayerEnteredCommand.Execute(new InteractObjectData(_interactObjectType));
         }
     }

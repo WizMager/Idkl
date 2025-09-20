@@ -1,40 +1,30 @@
-﻿using System;
-using Game.Ui.GameHudWindow;
-using Game.Ui.InteractObjectStatusWindow;
-using Reflex.Core;
-using UiCore;
+﻿using Reflex.Core;
+using Ui.Realization.GameHudWindow;
+using Ui.Realization.InteractObjectStatusWindow;
+using Ui.UiCore;
 using UnityEngine;
 
 namespace Game.Installers
 {
     public class UiInstaller : MonoBehaviour, IInstaller
     {
-        [SerializeField] private Canvas _canvas;
+        [SerializeField] private Transform _canvasTransform;
         [SerializeField] private GameHudView _gameHudView;
         [SerializeField] private InteractObjectStatusView _interactObjectStatusView;
         
         public void InstallBindings(ContainerBuilder containerBuilder)
         {
-            var canvasTransform = _canvas.transform;
-            
-            var gameHudView = Instantiate(_gameHudView, canvasTransform);
-            containerBuilder.AddSingleton(gameHudView, typeof(GameHudView));
-            containerBuilder.AddSingleton(typeof(GameHudController));
-            containerBuilder.AddSingleton(typeof(GameHudWindow), typeof(AWindow));
-            
-            var interactObjectStatusView = Instantiate(_interactObjectStatusView, canvasTransform);
-            containerBuilder.AddSingleton(interactObjectStatusView, typeof(InteractObjectStatusView));
-            containerBuilder.AddSingleton(typeof(InteractObjectStatusController));
-            containerBuilder.AddSingleton(typeof(InteractObjectStatusWindow), typeof(AWindow));
+            SetupWindow<GameHudWindow, GameHudController>(_gameHudView, containerBuilder);
+            SetupWindow<InteractObjectStatusWindow, InteractObjectStatusController>(_interactObjectStatusView, containerBuilder);
         }
-
-        //TODO: complete something like this for more clean code for setup windows
-        private void SetupWindow<TWindow>(AWindowView view, ContainerBuilder containerBuilder, Transform canvasTransform, Type controllerType) 
+        
+        private void SetupWindow<TWindow, TController>(AWindowView view, ContainerBuilder containerBuilder) 
             where TWindow : AWindow
+            where TController : IWindowController
         {
-            var settingsView = Instantiate(view, canvasTransform);
-            containerBuilder.AddSingleton(settingsView, typeof(AWindowView));
-            containerBuilder.AddSingleton(controllerType);
+            var viewInstance = Instantiate(view, _canvasTransform);
+            containerBuilder.AddSingleton(viewInstance, typeof(AWindowView), view.GetType());
+            containerBuilder.AddSingleton(typeof(TController));
             containerBuilder.AddSingleton(typeof(TWindow), typeof(AWindow));
         }
     }

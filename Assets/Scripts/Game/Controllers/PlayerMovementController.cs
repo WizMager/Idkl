@@ -1,10 +1,9 @@
 ﻿using Data.PlayerData;
-using Game.Services.GameSceneObjectsProvider;
 using Game.Services.InputService;
 using Game.Views;
 using GameLoop.Interfaces;
 using Generator;
-using UnityEngine;
+using Utils.GameSceneObjectsProvider;
 
 namespace Game.Controllers
 {

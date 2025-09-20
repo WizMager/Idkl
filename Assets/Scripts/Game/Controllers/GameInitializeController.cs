@@ -1,7 +1,7 @@
-﻿using Game.Services.UiManager;
-using GameLoop.Interfaces;
+﻿using GameLoop.Interfaces;
 using Generator;
-using UiCore;
+using Ui.UiCore;
+using Ui.UiManager;
 
 namespace Game.Controllers
 {

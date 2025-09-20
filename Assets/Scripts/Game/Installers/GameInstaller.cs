@@ -1,14 +1,14 @@
-﻿using Game.Services.GameSceneObjectsProvider;
-using Game.Services.GameSceneObjectsProvider.Impl;
-using Game.Services.InputService;
+﻿using Game.Services.InputService;
 using Game.Services.InputService.Impl;
 using Game.Services.InteractObjectService;
 using Game.Services.InteractObjectService.Impl;
-using Game.Services.UiManager;
-using Game.Services.UiManager.Impl;
 using Game.Views.Interfaces;
 using Reflex.Core;
+using Ui.UiManager;
+using Ui.UiManager.Impl;
 using UnityEngine;
+using Utils.GameSceneObjectsProvider;
+using Utils.GameSceneObjectsProvider.Impl;
 
 namespace Game.Installers
 {

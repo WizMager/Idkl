@@ -1,7 +1,7 @@
-﻿using Game.Services.GameSceneObjectsProvider;
-using GameLoop.Interfaces;
+﻿using GameLoop.Interfaces;
 using Generator;
 using UnityEngine;
+using Utils.GameSceneObjectsProvider;
 
 namespace Game.Controllers
 {

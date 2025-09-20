@@ -723,7 +723,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0175856f738c4b3c8fd96a02c0cdd5cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvas: {fileID: 2294248842429224602}
+  _canvasTransform: {fileID: 164268204911393912}
   _gameHudView: {fileID: 782328063761244742, guid: 2c2dde048d03f864e878a3950287c64e, type: 3}
   _interactObjectStatusView: {fileID: 2338469093650184993, guid: 0be82000f3ce21c469246f9f03583a49, type: 3}
 --- !u!1 &1805523941
