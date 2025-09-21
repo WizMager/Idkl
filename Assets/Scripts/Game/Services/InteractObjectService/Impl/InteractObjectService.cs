@@ -1,46 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
-using Game.Views.Interfaces;
 using R3;
-using Ui.Realization.InteractObjectStatusWindow;
 using Ui.UiCore;
-using Ui.UiManager;
+using Ui.WindowChanger;
+using Utils.InteractObjectProvider;
 
 namespace Game.Services.InteractObjectService.Impl
 {
     public class InteractObjectService : IInteractObjectService, IDisposable
     {
-        private readonly List<IInteractObject> _interactObjects = new();
-        private readonly IUiManager _uiManager;
+        private readonly IUiWindowChanger _uiWindowChanger;
         private readonly CompositeDisposable _disposable = new ();
         
         private InteractObjectData _currentInteractObjectData;
         
-        
         public InteractObjectService(
-            IEnumerable<IInteractObject> interactObjects, 
-            IUiManager uiManager
+            IInteractObjectsProvider interactObjectsProvider,
+            IUiWindowChanger uiWindowChanger
         )
         {
-            foreach (var interactObject in interactObjects)
+            foreach (var interactObject in interactObjectsProvider.GetInteractObjects())
             {
-                //_interactObjects.Add(interactObject);
                 _disposable.Add(interactObject.OnPlayerEntered.Subscribe(OnPlayerEnteredInObject));
                 _disposable.Add(interactObject.OnPlayerExited.Subscribe(OnPlayerExitedFromObject));
             }
 
-            _uiManager = uiManager;
+            _uiWindowChanger = uiWindowChanger;
         }
 
         private void OnPlayerEnteredInObject(InteractObjectData interactObjectData)
         {
             _currentInteractObjectData = interactObjectData;
-            _uiManager.OpenPopupWindow(EWindowName.InteractObjectStatus);
+            _uiWindowChanger.OpenPopupWindow(EWindowName.InteractObjectStatus);
         }
         
         private void OnPlayerExitedFromObject(Unit _)
         {
-            _uiManager.ClosePopupWindow();
+            _uiWindowChanger.ClosePopupWindow();
         }
         
         public InteractObjectData GetCurrentInteractObjectData()
