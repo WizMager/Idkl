@@ -9,6 +9,7 @@ namespace Ui.Realization.InteractObjectStatusWindow
         public TMP_Text ObjectName;
         public TMP_Text ObjectActionTime;
         public TMP_Text LastActionTime;
+        public Slider ActionTimeSlider;
         public Button InteractButton;
     }
 }
