@@ -9,10 +9,10 @@ namespace Ui.UiManager.Impl
     public class UiManager : IUiManager, IDisposable
     {
         private readonly Dictionary<EWindowName, AWindow> _windows = new();
+        private readonly Stack<EWindowName> _popupWindows = new();
         private readonly CompositeDisposable _disposable = new();
         
         private EWindowName _activeWindow = EWindowName.None;
-        private EWindowName _popupWindow = EWindowName.None;
         
         public UiManager(IEnumerable<AWindow> windows, IUiWindowChanger uiWindowChanger)
         {
@@ -41,16 +41,16 @@ namespace Ui.UiManager.Impl
 
         public void OpenPopupWindow(EWindowName windowName)
         {
-            _popupWindow = windowName;
-            _windows[_popupWindow].Activation(true);
+            _popupWindows.Push(windowName);
+            _windows[windowName].Activation(true);
         }
         
         public void ClosePopupWindow()
         {
-            if (_popupWindow == EWindowName.None)
+            if (!_popupWindows.TryPop(out var closeWindow))
                 return;
             
-            _windows[_popupWindow].Activation(false);
+            _windows[closeWindow].Activation(false);
         }
 
         public void CloseWindows()
