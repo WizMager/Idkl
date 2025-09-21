@@ -19,24 +19,28 @@ namespace Game.Services.InteractObjectService.Impl
         
         public InteractObjectService(
             IEnumerable<IInteractObject> interactObjects, 
-            IUiManager uiManager//, 
-            //IActivityStatusController activityStatusController
+            IUiManager uiManager
         )
         {
             foreach (var interactObject in interactObjects)
             {
                 //_interactObjects.Add(interactObject);
                 _disposable.Add(interactObject.OnPlayerEntered.Subscribe(OnPlayerEnteredInObject));
+                _disposable.Add(interactObject.OnPlayerExited.Subscribe(OnPlayerExitedFromObject));
             }
 
             _uiManager = uiManager;
-            //_activityStatusController = activityStatusController;
         }
 
         private void OnPlayerEnteredInObject(InteractObjectData interactObjectData)
         {
             _currentInteractObjectData = interactObjectData;
             _uiManager.OpenPopupWindow(EWindowName.InteractObjectStatus);
+        }
+        
+        private void OnPlayerExitedFromObject(Unit _)
+        {
+            _uiManager.ClosePopupWindow();
         }
         
         public InteractObjectData GetCurrentInteractObjectData()

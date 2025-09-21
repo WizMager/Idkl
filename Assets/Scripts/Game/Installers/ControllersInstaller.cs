@@ -28,6 +28,9 @@ namespace Game.Installers
 
 		private void Normal(ContainerBuilder containerBuilder)
 		{
+			// 0069
+			containerBuilder.AddSingleton(typeof(TemporaryCrutchSystem), typeof(IController));	// 0069
+
 			// 0240
 			containerBuilder.AddSingleton(typeof(PlayerLookController), typeof(IController));	// 0240
 			containerBuilder.AddSingleton(typeof(PlayerMovementController), typeof(IController));	// 0250

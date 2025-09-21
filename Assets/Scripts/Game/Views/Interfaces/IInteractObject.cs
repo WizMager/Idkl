@@ -6,5 +6,6 @@ namespace Game.Views.Interfaces
     public interface IInteractObject
     {
         Observable<InteractObjectData> OnPlayerEntered { get; }
+        Observable<Unit> OnPlayerExited { get; }
     }
 }
