@@ -2,6 +2,8 @@
 using Game.Services.InputService.Impl;
 using Game.Services.InteractObjectService;
 using Game.Services.InteractObjectService.Impl;
+using Game.Services.TimerService;
+using Game.Services.TimerService.Impl;
 using Reflex.Core;
 using Ui.UiManager;
 using Ui.UiManager.Impl;
@@ -25,6 +27,7 @@ namespace Game.Installers
             containerBuilder.AddSingleton(typeof(UiManager), typeof(IUiManager));
             containerBuilder.AddSingleton(typeof(UiWindowChanger), typeof(IUiWindowChanger));
             containerBuilder.AddSingleton(typeof(InteractObjectService), typeof(IInteractObjectService));
+            containerBuilder.AddSingleton(typeof(TimerService), typeof(ITimerService));
         }
     }
 }
