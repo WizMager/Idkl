@@ -4,7 +4,6 @@ using Game.Services.InteractObjectService;
 using Game.Services.TimerService;
 using R3;
 using Ui.UiCore;
-using UnityEngine;
 
 namespace Ui.Realization.InteractObjectStatusWindow
 {
@@ -32,8 +31,10 @@ namespace Ui.Realization.InteractObjectStatusWindow
         {
             View.ObjectName.text = _interactObjectService.GetCurrentInteractObjectData().InteractObjectName.ToString();
             _currentTimeForAction = _interactObjectService.GetCurrentInteractObjectData().BaseTimeForAction;
+            
             var timer = TimeSpan.FromSeconds(_currentTimeForAction);
             View.ObjectActionTime.text = $"{timer.Minutes:00}:{timer.Seconds:00}";
+            
             ChangeLastActionTimerValue(TimeSpan.FromSeconds(_currentTimeForAction));
         }
 
@@ -46,8 +47,7 @@ namespace Ui.Realization.InteractObjectStatusWindow
                 if (result)
                 {
                     ChangeLastActionTimerValue(TimeSpan.FromSeconds(_currentTimeForAction));
-                    Debug.Log("Add some resources");
-                    //TODO: Add some resources
+                    _interactObjectService.AddResourceFromObject();
                     await UniTask.Delay(TimeSpan.FromSeconds(1f));
                     continue;
                 }

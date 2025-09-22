@@ -2,8 +2,7 @@
 {
     public enum EInteractObject
     {
-        None = 0,
-        Forest = 1,
-        Lake = 2,
+        Forest = 0,
+        Lake = 1,
     }
 }

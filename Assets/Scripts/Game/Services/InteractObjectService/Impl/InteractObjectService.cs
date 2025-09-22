@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using Data.ItemsData;
+using Game.Services.ItemStorageService;
 using R3;
 using Ui.UiCore;
 using Ui.WindowChanger;
@@ -10,12 +13,17 @@ namespace Game.Services.InteractObjectService.Impl
     {
         private readonly IUiWindowChanger _uiWindowChanger;
         private readonly CompositeDisposable _disposable = new ();
+        private readonly Dictionary<EInteractObject, EItemType> _chosenItemInInteractObjects = new();
+        private readonly IItemData _itemData;
+        private readonly IItemStorageService _itemStorageService;
         
         private InteractObjectData _currentInteractObjectData;
         
         public InteractObjectService(
             IInteractObjectsProvider interactObjectsProvider,
-            IUiWindowChanger uiWindowChanger
+            IUiWindowChanger uiWindowChanger, 
+            IItemData itemData, 
+            IItemStorageService itemStorageService
         )
         {
             foreach (var interactObject in interactObjectsProvider.GetInteractObjects())
@@ -25,6 +33,18 @@ namespace Game.Services.InteractObjectService.Impl
             }
 
             _uiWindowChanger = uiWindowChanger;
+            _itemData = itemData;
+            _itemStorageService = itemStorageService;
+
+            InitDefaultChosenItems();
+        }
+
+        private void InitDefaultChosenItems()
+        {
+            foreach (var itemObjectPair in _itemData.GetDefaultItems)
+            {
+                _chosenItemInInteractObjects.Add(itemObjectPair.InteractObject, itemObjectPair.ItemType);
+            }
         }
 
         private void OnPlayerEnteredInObject(InteractObjectData interactObjectData)
@@ -43,6 +63,16 @@ namespace Game.Services.InteractObjectService.Impl
             return _currentInteractObjectData;
         }
         
+        public void AddResourceFromObject()
+        {
+            _itemStorageService.AddItem(GetCurrentItemFromObject());
+        }
+        
+        private EItemType GetCurrentItemFromObject()
+        {
+            return _chosenItemInInteractObjects[_currentInteractObjectData.InteractObjectName];
+        }
+
         public void Dispose()
         {
             _disposable?.Dispose();

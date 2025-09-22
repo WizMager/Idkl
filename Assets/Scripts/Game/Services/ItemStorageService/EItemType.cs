@@ -2,10 +2,9 @@
 {
     public enum EItemType
     {
-        None = 0,
         //Forest
-        BirchLog = 1,
-        MapleLog = 2,
+        BirchLog = 0,
+        MapleLog = 1,
         
         //Lake
         Albacore = 50,

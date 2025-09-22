@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44aa7147fdb04f92b7c64168410bd095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactObjectType: 2
+  _interactObjectType: 1
   _interactCollider: {fileID: 133624282}
   _baseTimeForAction: 3
 --- !u!65 &133624282 stripped
@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82e603165e0d45e1887399cf56d5ba0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactObjectType: 1
+  _interactObjectType: 0
   _interactCollider: {fileID: 373334097}
   _baseTimeForAction: 5
 --- !u!65 &373334097 stripped
@@ -713,6 +713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerData: {fileID: 11400000, guid: 27c65659df436434da73a804d8a1d5ca, type: 2}
+  _itemData: {fileID: 11400000, guid: 4e27409e4b81ad641b92372c32d4748e, type: 2}
 --- !u!114 &1636649153
 MonoBehaviour:
   m_ObjectHideFlags: 0
