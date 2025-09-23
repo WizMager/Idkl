@@ -29,14 +29,21 @@ namespace Game.Services.TimerService.Impl
             
             while (lastTime > 0)
             {
-                await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
+                try
+                {
+                    await UniTask.Delay(TimeSpan.FromSeconds(1f), cancellationToken: _cancellationTokenSource.Token);
+                }
+                catch (OperationCanceledException e)
+                {
+                    return false;
+                }
                 
                 if (_cancellationTokenSource.IsCancellationRequested)
                 {
                     return false;
                 }
                 
-                lastTime -= 0.1f;
+                lastTime -= 1f;
                 timerStep?.Invoke(TimeSpan.FromSeconds(lastTime));
             }
 

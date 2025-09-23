@@ -46,9 +46,11 @@ namespace Ui.Realization.InteractObjectStatusWindow
 
                 if (result)
                 {
-                    ChangeLastActionTimerValue(TimeSpan.FromSeconds(_currentTimeForAction));
                     _interactObjectService.AddResourceFromObject();
-                    await UniTask.Delay(TimeSpan.FromSeconds(1f));
+                    
+                    await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+                    
+                    ChangeLastActionTimerValue(TimeSpan.FromSeconds(_currentTimeForAction));
                     continue;
                 }
                 
