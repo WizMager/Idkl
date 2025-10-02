@@ -1,6 +1,9 @@
 ﻿using TMPro;
 using Ui.UiCore;
-using UnityEngine.UI;
+using UnityEngine;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
+using Slider = UnityEngine.UI.Slider;
 
 namespace Ui.Realization.InteractObjectStatusWindow
 {
@@ -11,5 +14,7 @@ namespace Ui.Realization.InteractObjectStatusWindow
         public TMP_Text LastActionTime;
         public Slider ActionTimeSlider;
         public Button InteractButton;
+        public ScrollView ScrollView;
+        public RectTransform ScrollViewContentTransform;
     }
 }

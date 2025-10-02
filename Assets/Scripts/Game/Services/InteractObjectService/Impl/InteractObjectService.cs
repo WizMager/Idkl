@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using Data.ItemsData;
 using Game.Services.ItemStorageService;
 using R3;
+using Ui.Realization.InteractObjectStatusWindow;
 using Ui.UiCore;
 using Ui.WindowChanger;
+using UnityEngine;
 using Utils.InteractObjectProvider;
+using Utils.ItemTypeHelper;
+using Object = UnityEngine.Object;
 
 namespace Game.Services.InteractObjectService.Impl
 {

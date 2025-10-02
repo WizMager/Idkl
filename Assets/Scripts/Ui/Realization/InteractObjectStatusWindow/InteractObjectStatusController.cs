@@ -1,9 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Data.ItemsData;
 using Game.Services.InteractObjectService;
+using Game.Services.ItemStorageService;
 using Game.Services.TimerService;
 using R3;
 using Ui.UiCore;
+using UnityEngine;
+using Utils.ItemTypeHelper;
+using Object = UnityEngine.Object;
 
 namespace Ui.Realization.InteractObjectStatusWindow
 {
@@ -11,24 +17,45 @@ namespace Ui.Realization.InteractObjectStatusWindow
     {
         private readonly IInteractObjectService _interactObjectService;
         private readonly ITimerService _timerService;
+        private readonly IItemData _itemData;
         private readonly CompositeDisposable _disposable = new ();
+        private readonly Dictionary<EInteractObject, CraftItem[]> _craftItems = new ();
         
         private float _currentTimeForAction;
         
         public InteractObjectStatusController(
             InteractObjectStatusView view,
             IInteractObjectService interactObjectService,
-            ITimerService timerService
+            ITimerService timerService, 
+            IItemData itemData
         ) : base(view)
         {
             _interactObjectService = interactObjectService;
             _timerService = timerService;
+            _itemData = itemData;
 
             View.InteractButton.OnClickAsObservable().Subscribe(_ => OnInteractButtonClicked().Forget()).AddTo(_disposable);
         }
 
         protected override void OnShow()
         {
+            var interactObject = _interactObjectService.GetCurrentInteractObjectData().InteractObjectName;
+            
+            if (!_craftItems.ContainsKey(interactObject))
+            {
+                var craftItems = new List<CraftItem>();
+                
+                foreach (var eItemType in ItemTypeMapper.GetItemsByInteractObject(_interactObjectService.GetCurrentInteractObjectData().InteractObjectName))
+                {
+                    var craftItem = Object.Instantiate(_itemData.CraftItem).GetComponent<CraftItem>();
+                    craftItem.Init(_itemData.GetItemIcon(eItemType), eItemType, View.ScrollViewContentTransform);
+                    
+                    craftItems.Add(craftItem);
+                }
+                
+                _craftItems.Add(interactObject, craftItems.ToArray());
+            }
+            
             View.ObjectName.text = _interactObjectService.GetCurrentInteractObjectData().InteractObjectName.ToString();
             _currentTimeForAction = _interactObjectService.GetCurrentInteractObjectData().BaseTimeForAction;
             
@@ -37,7 +64,7 @@ namespace Ui.Realization.InteractObjectStatusWindow
             
             ChangeLastActionTimerValue(TimeSpan.FromSeconds(_currentTimeForAction));
         }
-
+        
         private async UniTask OnInteractButtonClicked()
         {
             while (true)

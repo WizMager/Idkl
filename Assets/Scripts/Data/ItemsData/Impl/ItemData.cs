@@ -10,7 +10,9 @@ namespace Data.ItemsData.Impl
     public class ItemData : ScriptableObject, IItemData
     {
         [SerializeField] private List<ObjectItemPair> _defaultInteractObjectItems;
-        
+        [SerializeField] private List<ItemTypeSpritePair> _itemTypeSpritePairs;
+
+        [field: SerializeField] public GameObject CraftItem { get; private set; }
         public IReadOnlyList<ObjectItemPair> GetDefaultItems => _defaultInteractObjectItems;
 
         public EItemType GetDefaultItem(EInteractObject interactObject)
@@ -24,6 +26,19 @@ namespace Data.ItemsData.Impl
             }
             
             throw new Exception($"[{nameof(ItemData)}]: Default item not found for interact object {interactObject}");
+        }
+        
+        public Sprite GetItemIcon(EItemType itemType)
+        {
+            foreach (var itemTypeSpritePair in _itemTypeSpritePairs)
+            {
+                if (itemTypeSpritePair.ItemType != itemType)
+                    continue;
+                
+                return itemTypeSpritePair.Sprite;
+            }
+            
+            throw new Exception($"[{nameof(ItemData)}]: Item icon not found for item type - {itemType}");
         }
     }
 }

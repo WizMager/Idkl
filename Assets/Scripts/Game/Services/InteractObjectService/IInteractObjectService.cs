@@ -1,4 +1,6 @@
 ﻿using Game.Services.ItemStorageService;
+using Ui.Realization.InteractObjectStatusWindow;
+using UnityEngine;
 
 namespace Game.Services.InteractObjectService
 {
