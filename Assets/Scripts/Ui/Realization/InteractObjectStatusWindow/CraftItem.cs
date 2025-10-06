@@ -17,6 +17,7 @@ namespace Ui.Realization.InteractObjectStatusWindow
         private EItemType _itemType;
 
         public Observable<EItemType> OnItemChoose => _itemChooseCommand;
+        public EItemType ItemType => _itemType;
         
         public void Init(Sprite sprite, EItemType itemType, RectTransform parent)
         {

@@ -714,6 +714,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerData: {fileID: 11400000, guid: 27c65659df436434da73a804d8a1d5ca, type: 2}
   _itemData: {fileID: 11400000, guid: 4e27409e4b81ad641b92372c32d4748e, type: 2}
+  _itemCraftTimerData: {fileID: 11400000, guid: 2ff346a324701084b8c4422838b103b3, type: 2}
 --- !u!114 &1636649153
 MonoBehaviour:
   m_ObjectHideFlags: 0

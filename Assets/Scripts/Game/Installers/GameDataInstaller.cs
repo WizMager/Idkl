@@ -11,11 +11,13 @@ namespace Game.Installers
     {
         [SerializeField] private PlayerData _playerData;
         [SerializeField] private ItemData _itemData;
+        [SerializeField] private ItemCraftTimerData _itemCraftTimerData;
         
         public void InstallBindings(ContainerBuilder containerBuilder)
         {
             containerBuilder.AddSingleton(_playerData, typeof(IPlayerData));
             containerBuilder.AddSingleton(_itemData, typeof(IItemData));
+            containerBuilder.AddSingleton(_itemCraftTimerData, typeof(IItemCraftTimerData));
         }
     }
 }
