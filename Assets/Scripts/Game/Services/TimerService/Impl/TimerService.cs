@@ -22,9 +22,9 @@ namespace Game.Services.TimerService.Impl
                 _cancellationTokenSource.Cancel();
         }
 
-        public async UniTask<bool> StartTimer(float timer, Action<TimeSpan> timerStep = null)
+        public async UniTask<bool> StartTimer(float timer, Action<TimeSpan> timerStep = null, CancellationTokenSource cancellationTokenSource = null)
         {
-            _cancellationTokenSource = new CancellationTokenSource();
+            _cancellationTokenSource = cancellationTokenSource ?? new CancellationTokenSource();
             var lastTime = timer;
             
             while (lastTime > 0)

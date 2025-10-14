@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Data.ItemsData;
 using Game.Services.InteractObjectService;
@@ -25,6 +26,7 @@ namespace Ui.Realization.InteractObjectStatusWindow
 
         private float _currentTimeForAction;
         private EItemType _currentItemType;
+        private CancellationTokenSource _cancellationTokenSource = new();
         
         public InteractObjectStatusController(
             InteractObjectStatusView view,
@@ -88,6 +90,7 @@ namespace Ui.Realization.InteractObjectStatusWindow
             View.ObjectActionTime.text = $"{timer.Minutes:00}:{timer.Seconds:00}";
             
             ChangeLastActionTimerValue(TimeSpan.FromSeconds(_currentTimeForAction));
+            _cancellationTokenSource.Cancel();
         }
         
         protected override void OnHide()
@@ -105,9 +108,11 @@ namespace Ui.Realization.InteractObjectStatusWindow
 
         private async UniTask OnInteractButtonClicked()
         {
+            _cancellationTokenSource = new CancellationTokenSource();
+            
             while (true)
             {
-                var result = await _timerService.StartTimer(_currentTimeForAction, ChangeLastActionTimerValue);
+                var result = await _timerService.StartTimer(_currentTimeForAction, ChangeLastActionTimerValue, _cancellationTokenSource);
 
                 if (result)
                 {
@@ -120,7 +125,7 @@ namespace Ui.Realization.InteractObjectStatusWindow
                 }
                 
                 ChangeLastActionTimerValue(TimeSpan.FromSeconds(_currentTimeForAction));
-
+                
                 break;
             }
         }
