@@ -4,5 +4,6 @@
     {
         void AddItem(EItemType itemType, int count = 1);
         void RemoveItem(EItemType itemType, int count = 1);
+        int GetItemCount(EItemType itemType);
     }
 }

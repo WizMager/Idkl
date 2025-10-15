@@ -23,6 +23,7 @@ namespace Ui.Realization.InteractObjectStatusWindow
         private readonly CompositeDisposable _disposable = new ();
         private readonly Dictionary<EInteractObject, CraftItem[]> _craftItems = new ();
         private readonly Transform _craftItemsContainer;
+        private readonly IItemStorageService _itemStorageService;
 
         private float _currentTimeForAction;
         private EItemType _currentItemType;
@@ -33,22 +34,24 @@ namespace Ui.Realization.InteractObjectStatusWindow
             IInteractObjectService interactObjectService,
             ITimerService timerService, 
             IItemData itemData, 
-            IItemCraftTimerData itemCraftTimerData
+            IItemCraftTimerData itemCraftTimerData, 
+            IItemStorageService itemStorageService
         ) : base(view)
         {
             _interactObjectService = interactObjectService;
             _timerService = timerService;
             _itemData = itemData;
             _itemCraftTimerData = itemCraftTimerData;
+            _itemStorageService = itemStorageService;
 
             _craftItemsContainer = new GameObject("CraftItemsContainer").transform;
             View.InteractButton.OnClickAsObservable().Subscribe(_ => OnInteractButtonClicked().Forget()).AddTo(_disposable);
         }
-
+        
         protected override void OnShow()
         {
             var interactObject = _interactObjectService.GetCurrentInteractObjectData().InteractObjectName;
-            //TODO: do initialize all craft items at start game
+            //TODO: do initialize all craft items at start game (or not)
             if (!_craftItems.ContainsKey(interactObject))
             {
                 var craftItems = new List<CraftItem>();
@@ -71,8 +74,9 @@ namespace Ui.Realization.InteractObjectStatusWindow
                     craftItem.Activate(View.ScrollViewContentTransform);
                 }
             }
-            //refactoring little
-            _currentItemType = _craftItems[interactObject][0].ItemType;
+
+            _currentItemType = _interactObjectService.GetCurrentItemFromObject();
+            View.CraftItemCount.text = _itemStorageService.GetItemCount(_currentItemType).ToString();
             View.ObjectName.text = interactObject.ToString();
             _currentTimeForAction = _itemCraftTimerData.GetItemCraftTime(_currentItemType);
             
@@ -85,6 +89,9 @@ namespace Ui.Realization.InteractObjectStatusWindow
         private void OnItemChooseHandler(EItemType itemType)
         {
             _currentTimeForAction = _itemCraftTimerData.GetItemCraftTime(itemType);
+            _interactObjectService.ChangeCurrentCraftItem(itemType);
+            _currentItemType = itemType;
+            View.CraftItemCount.text = _itemStorageService.GetItemCount(_currentItemType).ToString();
             
             var timer = TimeSpan.FromSeconds(_currentTimeForAction);
             View.ObjectActionTime.text = $"{timer.Minutes:00}:{timer.Seconds:00}";
@@ -121,6 +128,9 @@ namespace Ui.Realization.InteractObjectStatusWindow
                     await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
                     
                     ChangeLastActionTimerValue(TimeSpan.FromSeconds(_currentTimeForAction));
+                    
+                    View.CraftItemCount.text = _itemStorageService.GetItemCount(_currentItemType).ToString();
+                    
                     continue;
                 }
                 

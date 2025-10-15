@@ -23,7 +23,7 @@ namespace Game.Services.ItemStorageService.Impl
         public void AddItem(EItemType itemType, int count = 1)
         {
             _itemsStorage[itemType].Count += count;
-            Debug.Log(_itemsStorage[itemType].Count);
+            Debug.Log(_itemsStorage[itemType].Count + " " + itemType);
         }
 
         public void RemoveItem(EItemType itemType, int count = 1)
@@ -32,6 +32,11 @@ namespace Game.Services.ItemStorageService.Impl
                 return;
             
             _itemsStorage[itemType].Count -= count;
+        }
+
+        public int GetItemCount(EItemType itemType)
+        {
+            return _itemsStorage[itemType].Count;
         }
     }
 }

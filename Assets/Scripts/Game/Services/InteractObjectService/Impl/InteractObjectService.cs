@@ -71,8 +71,13 @@ namespace Game.Services.InteractObjectService.Impl
         {
             _itemStorageService.AddItem(GetCurrentItemFromObject());
         }
-        
-        private EItemType GetCurrentItemFromObject()
+
+        public void ChangeCurrentCraftItem(EItemType itemType)
+        {
+            _chosenItemInInteractObjects[_currentInteractObjectData.InteractObjectName] = itemType;
+        }
+
+        public EItemType GetCurrentItemFromObject()
         {
             return _chosenItemInInteractObjects[_currentInteractObjectData.InteractObjectName];
         }

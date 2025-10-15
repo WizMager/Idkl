@@ -8,5 +8,7 @@ namespace Game.Services.InteractObjectService
     {
         InteractObjectData GetCurrentInteractObjectData();
         void AddResourceFromObject();
+        void ChangeCurrentCraftItem(EItemType itemType);
+        EItemType GetCurrentItemFromObject();
     }
 }
